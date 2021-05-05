@@ -2,9 +2,14 @@ import React, {useEffect} from "react";
 import { useForm } from 'react-hook-form'
 import { ErrorMessage } from '@hookform/error-message';
 import axios from 'axios';
+import { useHistory } from "react-router-dom";
+import { Link } from "react-router-dom"
+import {Context} from "../app";
 
 export default function Signup() {
 	const { register, handleSubmit, setError, clearErrors, formState: { errors } } = useForm()
+	const { user, setUser } = React.useContext(Context)
+	const history = useHistory()
 	
 	const onSubmit = async (d) => {
 		if (d.pass !== d.confPass) {
@@ -21,22 +26,25 @@ export default function Signup() {
 				uname: d.uname,
 				pass: d.pass
 			}, {
-				validateStatus: status => status !== 200 || status !== 400
+				validateStatus: status => status === 200 || status === 400
 			}).then(res => {
-				console.log(res.status)
-				
 				switch (res.status) {
 					case 200: {
-						console.log(`welcome aboard`)
+						localStorage.setItem("uname", res.data.uname)
+						
+						setUser(res.data)
+						
+						history.push("/")
+						
 						return
 					}
 					
 					case 400: {
-						console.log('existing user')
 						setError(`confPass`, {
 							type: `existing_user`,
 							message: `Please choose a different username`
 						})
+						
 						return
 					}
 				}
@@ -68,12 +76,12 @@ export default function Signup() {
 				<ErrorMessage
 					errors={errors}
 					name={`confPass`}
-					render={({ message }) => <p className={`text-red-400`}>{message}</p>}
+					render={({ message }) => <p className={`text-red-400 text-sm mt-1`}>{message}</p>}
 				/>
 				
 				<div className={`flex justify-between w-full mt-3`}>
-					<input type="submit" value="Log In" />
-					<button className={`text-white`}>Sign up</button>
+					<input type="submit" value="Sign Up" />
+					<Link to="/login" className={`text-white`}>Log In</Link>
 				</div>
 			</form>
 		</div>

@@ -1,3 +1,20 @@
 .borderize, .borderize * {
     border: 1px solid white;
 }
+
+:root {
+    font-size: 15px;
+}
+
+@screen md {
+    :root {
+        font-size: 16px;
+    }
+}
+
+@screen lg {
+    :root {
+        font-size: 17px;
+    }
+}
+
