@@ -5,6 +5,7 @@ import {useForm} from "react-hook-form";
 import axios from "axios";
 import {Context} from "../app";
 import { ErrorMessage } from '@hookform/error-message';
+import {HiPencil} from "react-icons/hi"
 
 export default function Settings() {
 	const [inputDialogVisible, setInputDialogVisible] = useState(true)
@@ -22,12 +23,10 @@ export default function Settings() {
 				
 				const url = "http://localhost:8080/api/friends"
 				
-				const res = await axios.post(url, {
+				const res2 = await axios.post(url, {
 					srcID: user.id,
 					tarID: res.data.id
 				}, {validateStatus: status => status === 200})
-				
-				console.log(res.data)
 				
 				reset()
 				setInputDialogVisible(false)
@@ -75,6 +74,12 @@ export default function Settings() {
 						</div>
 					</form>
 				)}
+				
+				<button /*onClick={() => setInputDialogVisible(true)}*/ className="flex w-full text-white px-2 justify-between items-center border-b-2 border-gray-400 mt-5">
+					<p>Username</p>
+					<p className={`ml-auto mr-3`}>{user.uname}</p>
+					<HiPencil />
+				</button>
 			</div>
 		</div>
 	)
