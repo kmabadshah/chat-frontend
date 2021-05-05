@@ -31,7 +31,12 @@ export default function Home() {
 						axios.get(url, { validateStatus: status => status === 200 })
 							.then(res => {
 								if (res.data == null) setFriends([])
-								else setFriends(res.data)
+								else {
+									console.log(res.data)
+									// res.data.forEach(fr => {
+									// 	url = "http://localhost:8080/api/users/" +
+									// })
+								}
 							})
 							.catch(err => console.error(err))
 					} else {
