@@ -8,7 +8,7 @@ import { ErrorMessage } from '@hookform/error-message';
 import {HiPencil} from "react-icons/hi"
 
 export default function Settings() {
-	const [inputDialogVisible, setInputDialogVisible] = useState(true)
+	const [inputDialogVisible, setInputDialogVisible] = useState(false)
 	const { register, handleSubmit, setError, clearErrors, reset, formState: { errors } } = useForm()
 	const {user} = useContext(Context)
 	

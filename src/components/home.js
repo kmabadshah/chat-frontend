@@ -21,24 +21,20 @@ export default function Home() {
 			let url = "http://localhost:8080/api/users/" + uname
 			
 			axios.get(url, { validateStatus: status =>  status === 200 || status === 404 })
-				.then(res => {
+				.then(async res => {
 					if (res.status === 200) {
 						setUser(res.data)
 						
 						const tempUser = res.data
 						
 						const url = "http://localhost:8080/api/friends/" + tempUser.id
-						axios.get(url, { validateStatus: status => status === 200 })
-							.then(res => {
-								if (res.data == null) setFriends([])
-								else {
-									console.log(res.data)
-									// res.data.forEach(fr => {
-									// 	url = "http://localhost:8080/api/users/" +
-									// })
-								}
-							})
-							.catch(err => console.error(err))
+						const res2 = await axios.get(url, { validateStatus: status => status === 200 })
+						
+						if (res2.data == null) setFriends([])
+						else {
+							setFriends(res2.data)
+							console.log(res2.data)
+						}
 					} else {
 						history.push("/login")
 					}
@@ -48,6 +44,13 @@ export default function Home() {
 				})
 		}
 	}, [])
+	
+	/*
+	*
+	* We've added a friends for the user dd(which is the current user)
+	* Now display the list of users in the home page
+	*
+	*/
 	
 	return (
 		<div className={`flex flex-col bg-black h-screen overflow-hidden`}>
