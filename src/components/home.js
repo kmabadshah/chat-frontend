@@ -5,7 +5,7 @@ import axios from "axios";
 
 export default function Home() {
 	const history = useHistory()
-	const { user, setUser, friends, setFriends } = React.useContext(Context)
+	const { user, setUser, friends, setFriends, setCurrentChatFriend } = React.useContext(Context)
 	
 	useEffect(() => {
 		if (user) {
@@ -26,14 +26,11 @@ export default function Home() {
 						setUser(res.data)
 						
 						const tempUser = res.data
-						
 						const url = "http://localhost:8080/api/friends/" + tempUser.id
 						const res2 = await axios.get(url, { validateStatus: status => status === 200 })
-						
 						if (res2.data == null) setFriends([])
 						else {
 							setFriends(res2.data)
-							console.log(res2.data)
 						}
 					} else {
 						history.push("/login")
@@ -54,12 +51,12 @@ export default function Home() {
 			
 			<div className="flex flex-col overflow-y-scroll">
 				{friends && friends.map((fr, i) => (
-					<div key={i} onClick={() => history.push("/chat")} className={`flex h-20 border-b-2 border-gray-700 items-center px-2 mt-5 justify-between`}>
+					<div key={i} onClick={() => history.push("/chat") & setCurrentChatFriend(fr)} className={`flex h-20 border-b-2 border-gray-700 items-center px-2 mt-5 justify-between`}>
 						<div className={`rounded-full h-4/6 w-12 bg-red-400 flex items-center justify-center`}> D </div>
 						
 						<div className="flex flex-col mx-4 text-white">
 							<div className="flex justify-between">
-								<h1 className={``}>{fr["uname"]}</h1>
+								<h1 className={``}>{fr.uname}</h1>
 								<div className={`h-4 w-4 rounded-full bg-green-400 mt-2`}></div>
 							</div>
 							<p className={``}>I am  a rockster who loves to...</p>

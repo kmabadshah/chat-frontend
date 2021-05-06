@@ -14,11 +14,13 @@ export const Context = React.createContext()
 export default function App() {
         const [user, setUser] = React.useState()
         const [friends, setFriends] = useState()
+        const [currentChatFriend, setCurrentChatFriend] = useState()
         
         return (
                 <Context.Provider value={{
                         user, setUser,
-                        friends, setFriends
+                        friends, setFriends,
+                        currentChatFriend, setCurrentChatFriend
                 }}>
                         <Router>
                                 <Switch>
