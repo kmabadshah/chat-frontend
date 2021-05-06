@@ -45,13 +45,6 @@ export default function Home() {
 		}
 	}, [])
 	
-	/*
-	*
-	* We've added a friends for the user dd(which is the current user)
-	* Now display the list of users in the home page
-	*
-	*/
-	
 	return (
 		<div className={`flex flex-col bg-black h-screen overflow-hidden`}>
 			<div className="flex h-16">
@@ -60,13 +53,13 @@ export default function Home() {
 			</div>
 			
 			<div className="flex flex-col overflow-y-scroll">
-				{[...Array(50).keys()].map((i, _) => (
+				{friends && friends.map((fr, i) => (
 					<div key={i} onClick={() => history.push("/chat")} className={`flex h-20 border-b-2 border-gray-700 items-center px-2 mt-5 justify-between`}>
 						<div className={`rounded-full h-4/6 w-12 bg-red-400 flex items-center justify-center`}> D </div>
 						
 						<div className="flex flex-col mx-4 text-white">
 							<div className="flex justify-between">
-								<h1 className={``}>Jane Doe</h1>
+								<h1 className={``}>{fr["uname"]}</h1>
 								<div className={`h-4 w-4 rounded-full bg-green-400 mt-2`}></div>
 							</div>
 							<p className={``}>I am  a rockster who loves to...</p>
